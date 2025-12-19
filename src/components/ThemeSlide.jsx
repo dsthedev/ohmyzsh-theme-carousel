@@ -23,36 +23,41 @@ export default function ThemeSlide({ theme }) {
       )}
 
       {/* Overlay */}
-      <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent text-white p-4 space-y-2">
+      <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/80 to-transparent text-white p-6 space-y-3">
         {/* Theme name with copy */}
         <div className="flex items-center space-x-2">
           <h2
-            className="text-xl font-bold cursor-pointer hover:text-blue-400"
+            className="text-3xl font-bold cursor-pointer hover:text-blue-400"
             onClick={copyName}
           >
             {theme.name}
           </h2>
           {copied && (
-            <span className="text-sm text-green-400 animate-fade" aria-live="polite">Copied</span>
+            <span
+              className="text-sm text-green-400 animate-fade"
+              aria-live="polite"
+            >
+              Copied
+            </span>
+          )}
+          {/* Official repo link */}
+          {theme.repoUrl && (
+            <a
+              href={theme.repoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm underline hover:text-blue-300"
+            >
+              Official repository
+            </a>
           )}
         </div>
 
-        {/* Official repo link */}
-        {theme.repoUrl && (
-          <a
-            href={theme.repoUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm underline hover:text-blue-300"
-          >
-            Official repository
-          </a>
-        )}
-
-        {/* Content */}
+        {/* Content
         <blockquote className="text-sm text-neutral-300 border-l-2 border-neutral-600 pl-3 space-y-1">
           {renderMarkdown(theme.content)}
         </blockquote>
+        */}
       </div>
 
       {/* Optional: Fade animation for tooltip */}

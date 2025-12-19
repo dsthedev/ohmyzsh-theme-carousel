@@ -72,14 +72,14 @@ export default function Carousel({ themes, index, setIndex }) {
       <button
         onClick={() => go(index - 1)}
         aria-label="Previous"
-        className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-4xl z-20 p-3 bg-black/30 rounded-full hover:bg-black/50"
+        className="absolute left-4 top-1/2 -translate-y-1/2 text-white text-6xl z-20 p-4 bg-black/30 rounded-full hover:bg-black/50"
       >
         ◀
       </button>
       <button
         onClick={() => go(index + 1)}
         aria-label="Next"
-        className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-4xl z-20 p-3 bg-black/30 rounded-full hover:bg-black/50"
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-white text-6xl z-20 p-4 bg-black/30 rounded-full hover:bg-black/50"
       >
         ▶
       </button>
