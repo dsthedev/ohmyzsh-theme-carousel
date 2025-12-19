@@ -33,7 +33,7 @@ A small React + Vite app that fetches the Oh My Zsh themes index and presents a 
 1. Install dependencies:
 
 ```bash
-cd /home/d11z/Sandbox/ohmyzsh-theme-carousel
+cd ohmyzsh-theme-carousel
 npm install
 ```
 
