@@ -1,6 +1,6 @@
 # OhMyZsh Theme Carousel
 
-Live demo: [LIVE_URL]
+[Live Demo](https://dsthedev.github.io/ohmyzsh-theme-carousel/)
 
 A small React + Vite app that fetches the Oh My Zsh themes index and presents a dark-themed, swipeable carousel of themes. Each slide shows the theme preview image (downloaded to `public/images/`), theme name, and a link to the official repository. The app is optimized for performance with lazy-loading and favorites persisted to `localStorage`.
 
