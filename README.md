@@ -1,16 +1,76 @@
-# React + Vite
+# OhMyZsh Theme Carousel
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Live demo: [LIVE_URL]
 
-Currently, two official plugins are available:
+A small React + Vite app that fetches the Oh My Zsh themes index and presents a dark-themed, swipeable carousel of themes. Each slide shows the theme preview image (downloaded to `public/images/`), theme name, and a link to the official repository. The app is optimized for performance with lazy-loading and favorites persisted to `localStorage`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+**Who it's for**
 
-## React Compiler
+- Developers and tinkerers who browse Oh My Zsh themes and want a quick visual way to preview and copy theme names.
+- People who want a small demo of Vite + React + Tailwind v4 with a practical UI (carousel, lazy images, favorites).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Features**
 
-## Expanding the ESLint configuration
+- Dark, centered carousel with fade transitions between slides.
+- Touch/swipe and keyboard navigation (arrow keys).
+- Copy theme name to clipboard from slide or header control.
+- Image lazy-loading (IntersectionObserver) and a spinning emoji placeholder while loading.
+- Favorites: add/remove favorites; favorites persisted in `localStorage` and available in a favorites dropdown.
+- Persists last-viewed theme and restores it on load (URL hash takes precedence).
+- Tailwind v4 + custom font (`Source Code Pro`) loaded via Google Fonts.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Project structure (important files)**
+
+- `src/components/Carousel.jsx` — carousel layout and navigation
+- `src/components/ThemeSlide.jsx` — slide layout and copy/favorite UI
+- `src/components/ThemeSelect.jsx` — header select + copy + favorite controls
+- `src/components/LazyImage.jsx` — IntersectionObserver-based image loader
+- `src/hooks/useThemes.jsx` — fetches and parses the Oh My Zsh Themes.md
+- `download_images.py` — helper script (included) to download preview images into `public/images/`
+
+**Quick start**
+
+1. Install dependencies:
+
+```bash
+cd /home/d11z/Sandbox/ohmyzsh-theme-carousel
+npm install
+```
+
+2. Download images (optional but recommended to avoid CORS at runtime):
+
+```bash
+python3 ./download_images.py
+```
+
+3. Run dev server:
+
+```bash
+npm run dev
+```
+
+**Build / Publish**
+
+- Build for production: `npm run build`.
+- Serve the `dist/` output (or publish to GitHub Pages). When published, replace `[LIVE_URL]` above with your GitHub Pages URL.
+
+**Environment / customizations**
+
+- `VITE_PROJECT_NAME` — set a custom project name (shown in header). Example in `.env`:
+  ```env
+  VITE_PROJECT_NAME="My Theme Carousel"
+  ```
+
+**Notes & tips**
+
+- The app expects preview images to live under `public/images/`. Use `download_images.py` to fetch and name them consistently with the Markdown source.
+- Favorites are stored as an array of theme indices in `localStorage` under the key `ohmyzsh:favorites`.
+- Last-viewed theme is stored under `ohmyzsh:last_theme` and restored on load unless a URL hash is present.
+
+**Contributing**
+
+- Open an issue or PR with improvements — suggestions welcome (better markdown rendering, smoother transitions, performance tweaks).
+
+**License**
+
+¯\_(ツ)\_/¯
