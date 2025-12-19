@@ -42,8 +42,14 @@ function parseThemes(md) {
 
     const img = line.match(/!\[.*?\]\((.*?)\)/);
     if (img && !current.imageUrl) {
-      // Replace URL with local public path
-      current.imageUrl = "/images/" + img[1].split("/").pop();
+      // Replace URL with local public path.
+      // Use Vite's BASE_URL so the path works both in dev ("/") and when deployed under
+      // a repo subpath (e.g. "/ohmyzsh-theme-carousel/"). import.meta.env.BASE_URL is
+      // injected by Vite at build time and always ends with '/'.
+      const base = typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL
+        ? import.meta.env.BASE_URL
+        : '/';
+      current.imageUrl = base + 'images/' + img[1].split('/').pop();
       continue;
     }
 
