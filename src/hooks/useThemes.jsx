@@ -25,11 +25,30 @@ function parseThemes(md) {
   const result = [];
   let current = null;
 
+  // Only parse the content that lives between the
+  // header "## Themes" and the following "## More themes" header.
+  let inThemesSection = false;
+
   for (const line of lines) {
-    if (line.startsWith("### ")) {
+    const trimmed = line.trim();
+
+    if (!inThemesSection) {
+      if (trimmed === "## Themes") {
+        inThemesSection = true;
+      }
+      continue;
+    }
+
+    // Stop parsing once we hit the next top-level heading for more themes.
+    if (trimmed === "## More themes") break;
+
+    // Completely ignore lines that are just YAML/markdown separators like '---'.
+    if (trimmed === "---") continue;
+
+    if (trimmed.startsWith("### ")) {
       if (current) result.push(current);
       current = {
-        name: line.replace("### ", "").trim(),
+        name: trimmed.replace("### ", "").trim(),
         imageUrl: null,
         repoUrl: null,
         content: [],
@@ -38,14 +57,13 @@ function parseThemes(md) {
     }
 
     if (!current) continue;
-    if (line.startsWith("## ")) continue;
+
+    // ignore other top-level '## ' headings inside the section (defensive),
+    // though we break earlier on the specific '## More themes'.
+    if (trimmed.startsWith("## ")) continue;
 
     const img = line.match(/!\[.*?\]\((.*?)\)/);
     if (img && !current.imageUrl) {
-      // Replace URL with local public path.
-      // Use Vite's BASE_URL so the path works both in dev ("/") and when deployed under
-      // a repo subpath (e.g. "/ohmyzsh-theme-carousel/"). import.meta.env.BASE_URL is
-      // injected by Vite at build time and always ends with '/'.
       const base = typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.BASE_URL
         ? import.meta.env.BASE_URL
         : '/';
