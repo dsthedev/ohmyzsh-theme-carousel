@@ -1,7 +1,7 @@
 import { useState } from "react";
-import { renderMarkdown } from "../utils/renderMarkdown";
+import LazyImage from "./LazyImage";
 
-export default function ThemeSlide({ theme }) {
+export default function ThemeSlide({ theme, isActive = true }) {
   const [copied, setCopied] = useState(false);
 
   function copyName() {
@@ -15,10 +15,16 @@ export default function ThemeSlide({ theme }) {
     <div className="relative w-full h-full bg-black flex items-center justify-center">
       {/* Image */}
       {theme.imageUrl && (
-        <img
+        <LazyImage
           src={theme.imageUrl}
           alt={theme.name}
-          className="absolute inset-0 w-full h-full object-cover opacity-90"
+          enabled={isActive}
+          className="absolute inset-0"
+          placeholder={
+            <div className="absolute inset-0 flex items-center justify-center bg-neutral-900">
+              <span className="text-8xl text-neutral-400 animate-spin-slow">⚪</span>
+            </div>
+          }
         />
       )}
 

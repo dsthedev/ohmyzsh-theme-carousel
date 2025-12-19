@@ -1,5 +1,6 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap');
+
+@import "tailwindcss";
 
 .oh-my-source-code-pro> {
   font-family: "Source Code Pro", monospace;

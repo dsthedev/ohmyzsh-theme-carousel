@@ -63,7 +63,7 @@ export default function Carousel({ themes, index, setIndex }) {
               isActive ? "opacity-100 pointer-events-auto z-10" : "opacity-0 pointer-events-none z-0"
             }`}
           >
-            <ThemeSlide theme={t} />
+            <ThemeSlide theme={t} isActive={isActive} />
           </div>
         );
       })}
