@@ -42,7 +42,8 @@ function parseThemes(md) {
 
     const img = line.match(/!\[.*?\]\((.*?)\)/);
     if (img && !current.imageUrl) {
-      current.imageUrl = img[1];
+      // Replace URL with local public path
+      current.imageUrl = "/images/" + img[1].split("/").pop();
       continue;
     }
 
