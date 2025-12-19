@@ -31,6 +31,18 @@ export default function ThemeSelect({ themes, index, setIndex, favorites = [], t
     setTimeout(() => setFavSaved(false), 1800);
   }
 
+  function removeSelectedFavorite() {
+    if (!Array.isArray(favorites) || favorites.length === 0) return;
+    const selectedFav = favorites.includes(index) ? index : favorites[0];
+    if (selectedFav == null) return;
+    if (toggleFavorite) toggleFavorite(selectedFav);
+    // adjust index: move back one unless at first, then set to 0
+    if (selectedFav === index) {
+      if (index > 0) setIndex(index - 1);
+      else setIndex(0);
+    }
+  }
+
   const currentName = themes?.[index]?.name;
 
   return (
@@ -86,25 +98,37 @@ export default function ThemeSelect({ themes, index, setIndex, favorites = [], t
       </div>
 
       {Array.isArray(favorites) && favorites.length > 0 && (
-        <div className="mt-3 w-1/2 flex flex-col items-center mb-4">
-          <label className="text-xs text-neutral-400 mb-1">Favorites</label>
-          <select
-            onChange={(e) => {
-              const idx = parseInt(e.target.value, 10);
-              if (!isNaN(idx) && idx >= 0 && idx < themes.length) setIndex(idx);
-            }}
-            className="w-1/3 bg-neutral-800 text-sm text-white px-3 py-2 rounded border border-neutral-700 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            value={index}
-          >
-            {favorites.map((favIdx) => {
-              const name = themes?.[favIdx]?.name || `#${favIdx}`;
-              return (
-                <option key={favIdx} value={favIdx}>
-                  {name}
-                </option>
-              );
-            })}
-          </select>
+        <div className="mt-3 w-60 flex items-center space-x-2 mb-4">
+          <div className="flex-1">
+            <label className="text-xs text-neutral-400 mb-1 block">Favorites</label>
+            <select
+              onChange={(e) => {
+                const idx = parseInt(e.target.value, 10);
+                if (!isNaN(idx) && idx >= 0 && idx < themes.length) setIndex(idx);
+              }}
+              className="w-full bg-neutral-800 text-sm text-white px-3 py-2 rounded border border-neutral-700 hover:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              value={favorites.includes(index) ? index : favorites[0]}
+            >
+              {favorites.map((favIdx) => {
+                const name = themes?.[favIdx]?.name || `#${favIdx}`;
+                return (
+                  <option key={favIdx} value={favIdx}>
+                    {name}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
+
+          <div>
+            <button
+              onClick={removeSelectedFavorite}
+              aria-label="Remove favorite"
+              className="text-xs transform translate-y-1/3 bg-neutral-800 text-white p-1 rounded hover:bg-neutral-700 border border-neutral-700"
+            >
+              Remove
+            </button>
+          </div>
         </div>
       )}
     </div>
