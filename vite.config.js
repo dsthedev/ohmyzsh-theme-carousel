@@ -5,5 +5,5 @@ import tailwind from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwind()],
-  base: './ohmyzsh-theme-carousel/',
+  base: '/ohmyzsh-theme-carousel/',
 })
